@@ -2,7 +2,7 @@
 DESCRIPTION
 """
 import sys
-sys.path.append('../src/')
+sys.path.append('/Users/mohammed/github/neural-vision/src/')
 
 import cPickle as pickle
 from train import train_models_generator as T
