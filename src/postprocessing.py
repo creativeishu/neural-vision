@@ -270,7 +270,30 @@ class TestSetAnalysis(object):
 										self.true_labels, \
 										self.predictions[:,1])
 			self.get_cm_index()
-			
+
+#------------------------------------------------------------------------------
+
+	def predict_array(self, xdata, ydata, batchsize=32, rescale=1.0/255):
+
+		# samples = self.generator.samples
+		# self.nb_class = self.generator.num_class
+		self.predictions = self.model.predict(xdata*rescale, batch_size=batchsize)
+		# self.predictions = self.predictions[:samples, :]
+		self.predict_labels = np.argmax(self.predictions, axis=1)
+		self.true_labels = np.argmax(ydata, axis=1)
+
+		self.confusion_matrix = confusion_matrix(\
+										self.true_labels, \
+										self.predict_labels)
+
+		self.FPR, self.TPR, thresholds = roc_curve(\
+									self.true_labels, \
+									self.predictions[:,1])
+		self.roc_auc = roc_auc_score(\
+									self.true_labels, \
+									self.predictions[:,1])
+		self.get_cm_index()			
+
 #------------------------------------------------------------------------------
 
 	def get_information_dictionary(self):
