@@ -7,6 +7,7 @@ sys.path.append('/Users/mohammed/github/neural-vision/src/')
 import numpy as np 
 
 import cPickle as pickle
+from sklearn.model_selection import train_test_split
 from train import train_models_array as TMA
 from postprocessing import TestSetAnalysis as TSA
 
@@ -37,6 +38,7 @@ verbose=1
 save=True
 savefilename='mymodel.hdf5'
 print_metadata=True
+seed = 42
 
 #==============================================================================
 
@@ -66,9 +68,11 @@ xdata = np.swapaxes(xdata, 1,3)
 xdata = np.swapaxes(xdata, 1,2)
 ydata = to_categorical(ydata, 2)
 
+X_train, X_test, y_train, y_test = train_test_split(xdata, ydata, test_size=val_split, random_state=seed)
+
 #==============================================================================
 
-ob = TMA(xdata, ydata, save_dir, rescale)
+ob = TMA(X_train, y_train, X_test, y_test, save_dir, rescale)
 
 hist = ob.train_custom_model(nlayers_conv, filters_conv, \
                     nlayers_dense, filters_dense, \
@@ -82,10 +86,16 @@ hist = ob.train_custom_model(nlayers_conv, filters_conv, \
 #==============================================================================
 
 obj = TSA(save_dir+savefilename, False)
-obj.predict_array(xdata, ydata, batchsize=batch_size, rescale=rescale)
+
+obj.predict_array(X_train, y_train, batchsize=batch_size, rescale=rescale)
 mydict = obj.get_information_dictionary()
 pickle.dump(mydict, \
-	open(save_dir+savefilename.replace('.hdf5', '_postprocess.pkl'), 'w'), -1)
+	open(save_dir+savefilename.replace('.hdf5', '_postprocess_train.pkl'), 'w'), -1)
+
+obj.predict_array(X_test, y_test, batchsize=batch_size, rescale=rescale)
+mydict = obj.get_information_dictionary()
+pickle.dump(mydict, \
+    open(save_dir+savefilename.replace('.hdf5', '_postprocess_valid.pkl'), 'w'), -1)
 
 pickle.dump(hist.history, open(save_dir+savefilename.replace('.hdf5', '_hist.p'), "w"))
 

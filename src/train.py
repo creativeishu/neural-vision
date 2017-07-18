@@ -27,21 +27,19 @@ class train_models_array(object):
     """
     My main docstring
     """
-    def __init__(self, xdata, ydata, save_dir=None, rescale=1.0/255.0):
+    def __init__(self, xdata, ydata, xval=None, yval=None, save_dir=None, rescale=1.0/255.0):
         """
         Doc string for the constructor
         """
         self.xdata = xdata*rescale
         self.ydata = ydata
-        print self.xdata.shape
-        print self.ydata.shape
 
         self.nb_train_samples = self.xdata.shape[0]
         img_width = self.xdata.shape[1]
         img_height = self.xdata.shape[2]
         nchannels = self.xdata.shape[3]
         self.nb_class = self.ydata.shape[1]
-
+        self.valid_data = (xval, yval)
 
         if save_dir==None:
             self.save_dir = xname.replace('.npy', '/savedmodels')
@@ -167,7 +165,7 @@ class train_models_array(object):
             print mymodel.summary()
 
         hist = mymodel.fit(self.xdata, self.ydata, \
-                    validation_split=val_split, \
+                    validation_data=self.valid_data, \
                     batch_size=batch_size, epochs=nb_epoch, \
                     verbose=verbose)
         if save:
