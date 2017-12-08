@@ -56,10 +56,10 @@ class image_analysis(object):
 			self.model = load_model(model)
 			firstlayer_index = 1
 		else:
-		    print "Valid models are:"
-		    print "vgg19, vgg16, inceptionv3, resnet50, xception"
-		    print "xception/inceptionv3 model is only available in tf backend"
-		    print "Or provide path to a saved model in .hdf5 format"
+		    print("Valid models are:")
+		    print("vgg19, vgg16, inceptionv3, resnet50, xception")
+		    print("xception/inceptionv3 model is only available in tf backend")
+		    print("Or provide path to a saved model in .hdf5 format")
 		    exit()
 		self.inputshape = self.model.layers[firstlayer_index].output_shape[1:]
 
@@ -97,7 +97,7 @@ class image_analysis(object):
 
 	def get_image_category(self, imagepath=None, labelpath=None, k=5):
 		if imagepath==None or labelpath==None:
-			print "Usage: predict_image(imagepage, labelpath)"
+			print("Usage: predict_image(imagepage, labelpath)")
 			exit()
 		im = self.get_image_input(imagepath)
 		out = self.model.predict(im)
@@ -149,7 +149,7 @@ class image_analysis(object):
 			layer = names[layer]
 
 		if not (('conv' in layer) or ('pool' in layer)):
-			print "please provide name or index of convolution/pooling layer"
+			print("please provide name or index of convolution/pooling layer")
 			exit()
 
 		features = self.get_features(image, layer)
@@ -157,11 +157,11 @@ class image_analysis(object):
 		nrow = int(N**0.5)
 		ncol = int(N**0.5)
 
-		print "================================================="
-		print "Layer name: ", layer
-		print "Features shape: ", features.shape
-		print "Number of rows and columns: ", nrow, ncol
-		print "================================================="
+		print("=================================================")
+		print("Layer name: ", layer)
+		print("Features shape: ", features.shape)
+		print("Number of rows and columns: ", nrow, ncol)
+		print("=================================================")
 
 		f, axarr = plt.subplots(nrow, ncol, \
 	    	sharex=True, sharey=True, figsize=(20,20))
@@ -186,8 +186,7 @@ class image_analysis(object):
 		for i in range(len(names)):
 		    if ('conv' in names[i]) or ('pool' in names[i]):
 		    	filename = DIR+names[i]+'.eps'
-		        self.plot_conv_features(image, names[i], \
-		        	save=True, savefilename=filename)
+		        self.plot_conv_features(image, names[i],save=True, savefilename=filename)
 
 #==============================================================================
 #==============================================================================
@@ -222,13 +221,13 @@ class TestSetAnalysis(object):
 			self.model = load_model(model)
 			firstlayer_index = 1
 		else:
-		    print "Valid models are:"
-		    print "vgg19, vgg16, inceptionv3, resnet50, xception"
-		    print "xception/inceptionv3 model is only available in tf backend"
-		    print "Or provide path to a saved model in .hdf5 format"
+		    print("Valid models are:")
+		    print("vgg19, vgg16, inceptionv3, resnet50, xception")
+		    print("xception/inceptionv3 model is only available in tf backend")
+		    print("Or provide path to a saved model in .hdf5 format")
 		    exit()
 		if show:
-			print self.model.summary()
+			print(self.model.summary())
 		self.inputshape = self.model.layers[firstlayer_index].output_shape[1:]
 
 #------------------------------------------------------------------------------
@@ -322,7 +321,7 @@ class TestSetAnalysis(object):
 		plt.yticks([], [])
 		plt.clim(0, 1)
 		if save:
-			print "Now saving confusion matrix figure"
+			print("Now saving confusion matrix figure")
 			plt.savefig(savename)
 		else:
 			plt.show()
@@ -354,7 +353,7 @@ class TestSetAnalysis(object):
 	    ind_arr = np.random.choice(ind_arr, size=N, replace=False)
 	    names = np.array(self.generator.filenames)[ind_arr]
 	    N = N - N%ncol
-	    print N
+	    print(N)
 	    nrow = N/ncol
 	    f, axarr = plt.subplots(nrow, ncol, sharex=True, sharey=True, \
 	    						figsize=(ncol, nrow))
@@ -410,6 +409,6 @@ if __name__ == "__main__":
 		obj.predict_gen(data_dir, batchsize=32)
 		obj.plot_all()
 	else:
-		print "Usage: Either import this class, or do:"
-		print "python imagepostprocessing <model_path> <data_directory>"
+		print("Usage: Either import this class, or do:")
+		print("python imagepostprocessing <model_path> <data_directory>")
 

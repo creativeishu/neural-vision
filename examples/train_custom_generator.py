@@ -2,19 +2,19 @@
 DESCRIPTION
 """
 import sys
-sys.path.append('/Users/mohammed/github/neural-vision/src/')
+sys.path.append('/Users/irshad/github/neural-vision/src/')
 
-import cPickle as pickle
+# import cPickle as pickle
 from train import train_models_generator as T
-from postprocessing import TestSetAnalysis as A
+# from postprocessing import TestSetAnalysis as A
 
 #==============================================================================
 
 # Parameters:
 #------------
 
-train_dir='/Users/mohammed/Dropbox/irshad2janu/deeplearning_datasets/image_classifiers/catsdogs/train/'
-valid_dir='/Users/mohammed/Dropbox/irshad2janu/deeplearning_datasets/image_classifiers/catsdogs/validation/'
+train_dir='/Users/irshad/work/data/catsdogs/train/'
+valid_dir='/Users/irshad/work/data/catsdogs/validation/'
 save_dir='../output/'
 img_width=150
 img_height=150
@@ -35,7 +35,7 @@ activation='relu'
 loss='binary_crossentropy'
 metrics=['accuracy']
 optimizer='adadelta'
-nb_epoch=1
+nb_epoch=20
 verbose=1
 save=True
 savefilename='convlayers%i_denselayers%i_nepoch%i.hdf5'\
@@ -57,19 +57,19 @@ hist = ob.train_custom_model(nlayers_conv, filters_conv, \
 
 #==============================================================================
 
-obj_train = A(save_dir+savefilename, False)
-obj_train.predict_gen(train_dir, batchsize=batch_size)
-mydict_train = obj_train.get_information_dictionary()
-pickle.dump(mydict_train, \
-	open(save_dir+savefilename.replace('.hdf5', '_postprocess_train.pkl'), 'w'), -1)
+# obj_train = A(save_dir+savefilename, False)
+# obj_train.predict_gen(train_dir, batchsize=batch_size)
+# mydict_train = obj_train.get_information_dictionary()
+# pickle.dump(mydict_train, \
+# 	open(save_dir+savefilename.replace('.hdf5', '_postprocess_train.pkl'), 'w'), -1)
 
-if valid_dir != None:
-	obj_valid = A(save_dir+savefilename, False)
-	obj_valid.predict_gen(valid_dir, batchsize=batch_size)
-	mydict_valid = obj_valid.get_information_dictionary()
-	pickle.dump(mydict_valid, \
-		open(save_dir+savefilename.replace('.hdf5', '_postprocess_valid.pkl'), 'w'), -1)
+# if valid_dir != None:
+# 	obj_valid = A(save_dir+savefilename, False)
+# 	obj_valid.predict_gen(valid_dir, batchsize=batch_size)
+# 	mydict_valid = obj_valid.get_information_dictionary()
+# 	pickle.dump(mydict_valid, \
+# 		open(save_dir+savefilename.replace('.hdf5', '_postprocess_valid.pkl'), 'w'), -1)
 
-pickle.dump(hist.history, open(save_dir+savefilename.replace('.hdf5', '_hist.p'), "w"))
+# pickle.dump(hist.history, open(save_dir+savefilename.replace('.hdf5', '_hist.p'), "w"))
 
 #==============================================================================

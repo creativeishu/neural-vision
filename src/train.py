@@ -55,19 +55,19 @@ class train_models_array(object):
         elif (K.image_data_format()=='channels_first'):
             self.inputshape = (nchannels, img_width, img_height)
         else:
-            print "Invalid  data format: ", K.image_data_format()
+            print("Invalid  data format: ", K.image_data_format())
             exit()
 
 #------------------------------------------------------------------------------
 
     def print_summary(self):
-        print
-        print "================================================================"
-        print 
-        print "Training data shape: ", self.xdata.shape
-        print "Output will be saved at: ", self.save_dir
-        print "Input shape: ", self.inputshape
-        print "Number of training samples: ", self.nb_train_samples
+        print()
+        print("================================================================")
+        print() 
+        print("Training data shape: ", self.xdata.shape)
+        print("Output will be saved at: ", self.save_dir)
+        print("Input shape: ", self.inputshape)
+        print("Number of training samples: ", self.nb_train_samples)
 
 #------------------------------------------------------------------------------
 
@@ -84,16 +84,16 @@ class train_models_array(object):
             filters_conv=[filters_conv]*nlayers_conv
         elif not(type(filters_conv)==list and \
                     (nlayers_conv==len(filters_conv))):
-            print "filters_conv can only be an integer "
-            print "or list of length nlayers_conv"
+            print("filters_conv can only be an integer ")
+            print("or list of length nlayers_conv")
             exit()
 
         if type(filters_dense)==int:
             filters_dense=[filters_dense]*nlayers_dense
         elif not(type(filters_dense)==list and \
                     (nlayers_dense==len(filters_dense))):
-            print "filters_dense can only be an integer "
-            print "or list of length nlayers_dense"
+            print("filters_dense can only be an integer ")
+            print("or list of length nlayers_dense")
             exit()
 
         model = Sequential()
@@ -152,17 +152,17 @@ class train_models_array(object):
 
         if print_metadata:
             self.print_summary()            
-            print "Number of convolutional layers: ", nlayers_conv
-            print "Number of convolutional filters: ", filters_conv
-            print "Number of dense layers: ", nlayers_dense
-            print "Number of dense filters: ", filters_dense
-            print "Activation functions: ", activation
-            print "Loss: ", loss
-            print "Metrics: ", metrics
-            print "Optimizer: ", optimizer
-            print "Number of epochs: ", nb_epoch
-            print "Model file: ", self.save_dir+savefilename
-            print mymodel.summary()
+            print("Number of convolutional layers: ", nlayers_conv)
+            print("Number of convolutional filters: ", filters_conv)
+            print("Number of dense layers: ", nlayers_dense)
+            print("Number of dense filters: ", filters_dense)
+            print("Activation functions: ", activation)
+            print("Loss: ", loss)
+            print("Metrics: ", metrics)
+            print("Optimizer: ", optimizer)
+            print("Number of epochs: ", nb_epoch)
+            print("Model file: ", self.save_dir+savefilename)
+            print(mymodel.summary())
 
         hist = mymodel.fit(self.xdata, self.ydata, \
                     validation_data=self.valid_data, \
@@ -219,22 +219,22 @@ class train_models_generator(object):
         elif (K.image_data_format()=='channels_first'):
             self.inputshape = (nchannels, img_width, img_height)
         else:
-            print "Invalid  data format: ", K.image_data_format()
+            print("Invalid  data format: ", K.image_data_format())
             exit()
 
 #------------------------------------------------------------------------------
 
     def print_summary(self):
-        print
-        print "================================================================"
-        print 
-        print "Training data: ", self.train_dir
-        print "Validation data: ", self.valid_dir
-        print "Output will be saved at: ", self.save_dir
-        print "Input shape: ", self.inputshape
-        print "Number of training samples: ", self.nb_train_samples
-        print "Number of validation samples: ", self.nb_valid_samples
-        print "Batch size: ", self.batch_size
+        print()
+        print("================================================================")
+        print() 
+        print("Training data: ", self.train_dir)
+        print("Validation data: ", self.valid_dir)
+        print("Output will be saved at: ", self.save_dir)
+        print("Input shape: ", self.inputshape)
+        print("Number of training samples: ", self.nb_train_samples)
+        print("Number of validation samples: ", self.nb_valid_samples)
+        print("Batch size: ", self.batch_size)
 
 #------------------------------------------------------------------------------        
         
@@ -291,9 +291,9 @@ class train_models_generator(object):
             base_model = Xception(weights=weights, include_top = False, \
                                input_shape=inputshape)        
         else:
-            print "Valid models are:"
-            print "vgg19, vgg16, inceptionv3, resnet50, xception"
-            print "Note: xception model is only available in tf backend"
+            print("Valid models are:")
+            print("vgg19, vgg16, inceptionv3, resnet50, xception")
+            print("Note: xception model is only available in tf backend")
             exit()
 
         x = Flatten()(base_model.output)
@@ -320,16 +320,16 @@ class train_models_generator(object):
             filters_conv=[filters_conv]*nlayers_conv
         elif not(type(filters_conv)==list and \
                     (nlayers_conv==len(filters_conv))):
-            print "filters_conv can only be an integer "
-            print "or list of length nlayers_conv"
+            print("filters_conv can only be an integer ")
+            print("or list of length nlayers_conv")
             exit()
 
         if type(filters_dense)==int:
             filters_dense=[filters_dense]*nlayers_dense
         elif not(type(filters_dense)==list and \
                     (nlayers_dense==len(filters_dense))):
-            print "filters_dense can only be an integer "
-            print "or list of length nlayers_dense"
+            print("filters_dense can only be an integer ")
+            print("or list of length nlayers_dense")
             exit()
 
         model = Sequential()
@@ -377,13 +377,13 @@ class train_models_generator(object):
 
         if print_metadata:
             self.print_summary()
-            print "Model name: ", model
-            print "Loss: ", loss
-            print "Metrics: ", metrics
-            print "Optimizer: ", optimizer
-            print "Number of epochs: ", nb_epoch
-            print "Model file: ", self.save_dir+savefilename
-            print mymodel.summary()
+            print("Model name: ", model)
+            print("Loss: ", loss)
+            print("Metrics: ", metrics)
+            print("Optimizer: ", optimizer)
+            print("Number of epochs: ", nb_epoch)
+            print("Model file: ", self.save_dir+savefilename)
+            print(mymodel.summary())
 
             hist = mymodel.fit_generator(self.train_generator, \
                     validation_data=self.valid_generator, \
@@ -431,17 +431,17 @@ class train_models_generator(object):
 
         if print_metadata:
             self.print_summary()            
-            print "Number of convolutional layers: ", nlayers_conv
-            print "Number of convolutional filters: ", filters_conv
-            print "Number of dense layers: ", nlayers_dense
-            print "Number of dense filters: ", filters_dense
-            print "Activation functions: ", activation
-            print "Loss: ", loss
-            print "Metrics: ", metrics
-            print "Optimizer: ", optimizer
-            print "Number of epochs: ", nb_epoch
-            print "Model file: ", self.save_dir+savefilename
-            print mymodel.summary()
+            print("Number of convolutional layers: ", nlayers_conv)
+            print("Number of convolutional filters: ", filters_conv)
+            print("Number of dense layers: ", nlayers_dense)
+            print("Number of dense filters: ", filters_dense)
+            print("Activation functions: ", activation)
+            print("Loss: ", loss)
+            print("Metrics: ", metrics)
+            print("Optimizer: ", optimizer)
+            print("Number of epochs: ", nb_epoch)
+            print("Model file: ", self.save_dir+savefilename)
+            print(mymodel.summary())
 
         hist = mymodel.fit_generator(self.train_generator, \
                     validation_data=self.valid_generator, \
