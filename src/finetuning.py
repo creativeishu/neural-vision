@@ -97,7 +97,7 @@ class Finetune(object):
         elif (K.image_data_format()=='channels_first'):
             self.inputshape = (nchannels, img_width, img_height)
         else:
-            print "Invalid  data format: ", K.image_data_format()
+            print("Invalid  data format: ", K.image_data_format())
             exit()
         #----------------------------------------
 
@@ -111,33 +111,33 @@ class Finetune(object):
 #------------------------------------------------------------------------------
 
     def print_summary(self):
-        print "============================================"
-        print 
-        print "Summary"
-        print "-------"
-        print 
-        print "Train data directory: ", self.train_dir
+        print("============================================")
+        print() 
+        print("Summary")
+        print("-------")
+        print() 
+        print("Train data directory: ", self.train_dir)
         if self.valid_dir != None:
-            print "Vaoidation data directory: : ", self.valid_dir
-        print "bottleneck_features will be saved/loaded from directory: ", self.save_dir
-        print "Top_model will be saved/loaded as: ", self.top_model_file
-        print "pre-Fine tuned model will be saved at: ", self.premodelname
-        print "Fine tuned model will be saved at: ", self.savefilename
-        print "Using model: ", self.modelname
-        print "Data Format: ", K.image_data_format()
-        print "Input shape: ", self.inputshape
-        print "Number of training samples: ", self.nb_train_samples
+            print("Vaoidation data directory: : ", self.valid_dir)
+        print("bottleneck_features will be saved/loaded from directory: ", self.save_dir)
+        print("Top_model will be saved/loaded as: ", self.top_model_file)
+        print("pre-Fine tuned model will be saved at: ", self.premodelname)
+        print("Fine tuned model will be saved at: ", self.savefilename)
+        print("Using model: ", self.modelname)
+        print("Data Format: ", K.image_data_format())
+        print("Input shape: ", self.inputshape)
+        print("Number of training samples: ", self.nb_train_samples)
         if self.valid_dir != None:
-            print "Number of validation samples: ", self.nb_valid_samples
-        print "Number of classes: ", self.nb_class
-        print "Batch size: ", self.batch_size
-        print "Loss: ", self.loss
-        print "Optimizer: ", self.optimizer
-        print "Metrics: ", self.metrics
-        print "Number of epochs for top model: ", self.nb_epoch_top
-        print "Number of epochs for fine tuning: ", self.nb_epoch
-        print 
-        print "============================================"
+            print("Number of validation samples: ", self.nb_valid_samples)
+        print("Number of classes: ", self.nb_class)
+        print("Batch size: ", self.batch_size)
+        print("Loss: ", self.loss)
+        print("Optimizer: ", self.optimizer)
+        print("Metrics: ", self.metrics)
+        print("Number of epochs for top model: ", self.nb_epoch_top)
+        print("Number of epochs for fine tuning: ", self.nb_epoch)
+        print() 
+        print("============================================")
 
 #------------------------------------------------------------------------------        
         
@@ -205,10 +205,10 @@ class Finetune(object):
                                input_shape=self.inputshape)
             untrainable_layers = 15
         else:
-            print "Valid models are:"
+            print("Valid models are:")
             # print "vgg19, vgg16, inceptionv3, resnet50, xception"
-            print "vgg19, vgg16"
-            print "Note: xception model is only available in tf backend"
+            print("vgg19, vgg16")
+            print("Note: xception model is only available in tf backend")
             exit()
 
         return base_model, untrainable_layers
@@ -216,10 +216,10 @@ class Finetune(object):
 #------------------------------------------------------------------------------
 
     def save_bottlebeck_features(self):
-        print "============================================"
-        print 
-        print "Training bottleneck_features for training set"
-        print 
+        print("============================================")
+        print() 
+        print("Training bottleneck_features for training set")
+        print() 
 
         generator = self.initialize_generator(self.train_dir, \
                                 self.inputshape[0], self.inputshape[1], \
@@ -234,7 +234,7 @@ class Finetune(object):
                                 bottleneck_features_train)
 
         if self.valid_dir != None:
-            print "Training bottleneck_features for validation set"
+            print("Training bottleneck_features for validation set")
             generator = self.initialize_generator(self.valid_dir, \
                                     self.inputshape[0], self.inputshape[1], \
                                     self.batch_size, \
@@ -246,8 +246,8 @@ class Finetune(object):
                                     self.nb_valid_samples/self.batch_size+1)
             np.save(open(self.bottleneck_valid_file, 'w'), \
                                     bottleneck_features_valid)
-        print 
-        print "============================================"
+        print() 
+        print("============================================")
 
 #------------------------------------------------------------------------------
 
@@ -259,10 +259,10 @@ class Finetune(object):
 #------------------------------------------------------------------------------
 
     def train_top_model(self, verbose=1):
-        print "============================================"    
-        print
-        print "Training top_model..."
-        print 
+        print("============================================")    
+        print()
+        print("Training top_model...")
+        print() 
         train_data = np.load(open(self.bottleneck_train_file))
         train_labels = []
         for i in range(self.nb_class):
@@ -302,8 +302,8 @@ class Finetune(object):
                   batch_size=self.batch_size, verbose=verbose)
 
         top_model.save(self.top_model_file)
-        print 
-        print "============================================"        
+        print() 
+        print("============================================")        
         return top_model
 
 #------------------------------------------------------------------------------
@@ -317,7 +317,7 @@ class Finetune(object):
         if Train_topmodel:    
             self.top_model = self.train_top_model(verbose=verbose)
         else:
-            print "Loading top model"
+            print("Loading top model")
             self.top_model = load_model(self.top_model_file)
 
         model = Model(inputs=self.base_model.input, \
@@ -329,10 +329,10 @@ class Finetune(object):
                             optimizer=self.optimizer, \
                             metrics=self.metrics)         
         if savepremodel:
-            print "Saving pre-model"
+            print("Saving pre-model")
             model.save(self.premodelname, overwrite=True)
 
-        print "Now fine tuning... "
+        print("Now fine tuning... ")
         if self.valid_dir != None:
             hist = model.fit_generator(self.train_generator, \
                 validation_data=self.valid_generator,\

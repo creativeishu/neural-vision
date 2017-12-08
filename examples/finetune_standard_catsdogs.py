@@ -2,7 +2,7 @@
 DESCRIPTION
 """
 import sys
-sys.path.append('/Users/mohammed/github/markovianlabs/image-classifier/source_codes/')
+sys.path.append('/Users/irshad/github/neural-vision/src/')
 
 import pickle
 from finetuning import Finetune as F
@@ -13,12 +13,9 @@ from finetuning import Finetune as F
 #------------
 
 modelname = 'vgg16'
-train_dir = '/Users/mohammed/Dropbox/irshad2janu/deeplearning_datasets/\
-image_classifiers/catsdogs/train/'
-valid_dir='/Users/mohammed/Dropbox/irshad2janu/deeplearning_datasets/\
-image_classifiers/catsdogs/validation/'
-save_dir='/Users/mohammed/Dropbox/irshad2janu/deeplearning_datasets/\
-image_classifiers/catsdogs/savedmodels/'
+train_dir = '/Users/irshad/work/data/catsdogs/train/'
+valid_dir='/Users/irshad/work/data/catsdogs/validation/'
+save_dir='../output/'
 img_width=224
 img_height=224
 batch_size=32
@@ -38,8 +35,8 @@ top_name = 'top_model'
 final_name = 'finetuned'
 pre_name = 'pre_finetuned'
 
-Train_bottleneck=False
-Train_topmodel=False
+Train_bottleneck=True
+Train_topmodel=True
 verbose=1
 savemodel=True
 savepremodel=True
