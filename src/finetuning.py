@@ -229,8 +229,8 @@ class Finetune(object):
                                 class_mode=None, shuffle=False)
         bottleneck_features_train = self.base_model.predict_generator(\
                                 generator,\
-                                self.nb_train_samples/self.batch_size+1)
-        np.save(open(self.bottleneck_train_file, 'w'), \
+                                self.nb_train_samples/self.batch_size)
+        np.save(self.bottleneck_train_file, \
                                 bottleneck_features_train)
 
         if self.valid_dir != None:
@@ -243,8 +243,8 @@ class Finetune(object):
                                     class_mode=None, shuffle=False)
             bottleneck_features_valid = self.base_model.predict_generator(\
                                     generator,\
-                                    self.nb_valid_samples/self.batch_size+1)
-            np.save(open(self.bottleneck_valid_file, 'w'), \
+                                    self.nb_valid_samples/self.batch_size)
+            np.save(self.bottleneck_valid_file, \
                                     bottleneck_features_valid)
         print() 
         print("============================================")
@@ -263,7 +263,7 @@ class Finetune(object):
         print()
         print("Training top_model...")
         print() 
-        train_data = np.load(open(self.bottleneck_train_file))
+        train_data = np.load(self.bottleneck_train_file)
         train_labels = []
         for i in range(self.nb_class):
             train_labels +=  list([i] * self.nTrain[i])
@@ -271,7 +271,7 @@ class Finetune(object):
         train_labels = self.one_hot_encode_object_array(train_labels)
 
         if self.valid_dir != None:
-            validation_data = np.load(open(self.bottleneck_valid_file))
+            validation_data = np.load(self.bottleneck_valid_file)
             validation_labels = []
             for i in range(self.nb_class):
                 validation_labels +=  list([i] * self.nValidation[i])

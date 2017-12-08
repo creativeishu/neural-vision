@@ -2,7 +2,7 @@
 DESCRIPTION
 """
 import sys
-sys.path.append('/Users/irshad/github/neural-vision/src/')
+sys.path.append('/homedirs/irshad/github/neural-vision/src/')
 
 import pickle
 from finetuning import Finetune as F
@@ -13,8 +13,8 @@ from finetuning import Finetune as F
 #------------
 
 modelname = 'vgg16'
-train_dir = '/Users/irshad/work/data/catsdogs/train/'
-valid_dir='/Users/irshad/work/data/catsdogs/validation/'
+train_dir = '/homedirs/irshad/work/data/catsdogs/train/'
+valid_dir='/homedirs/irshad/work/data/catsdogs/validation/'
 save_dir='../output/'
 img_width=224
 img_height=224
